@@ -29,10 +29,18 @@ For our final model, we
 
 
 ### Fairness Analysis
-We noticed earlier in our data analysis that there was a tag in our dataset in the 'tags' column on whether the recipe was "north american". In our fairness analysis we are going to examine whether our model is equally likely to predict whether or not a recipe is 5-star rated for north american recipes as well as recipes that do not have the tag "north american". This is to ensure that our model isn't biased towards any particular region because all food is good food no matter where it comes from!! Therefore, our null and alternate hypotheses are as follows:
+We noticed earlier in our data analysis that there was a tag in our dataset in the 'tags' column on whether the recipe was "north american". In our fairness analysis we are going to examine whether our model is equally likely to predict whether or not a recipe is 5-star rated for North American recipes as well as recipes that do not have the tag "north american". This is to ensure that our model isn't biased towards any particular region because all food is good food no matter where it comes from!! Therefore, our null and alternate hypotheses are as follows:
 
 **Null Hypothesis**: Our model is fair. Its recall for recipes tagged "north american" and and those without the tag "north american" are roughly the same, and any differences are due to random chance.
 
-**Alternative Hypothesis**: Our model is unfair. Its recall for recipes labeled "north american" is higher than its precision for male complainants
+**Alternative Hypothesis**: Our model is unfair. Its recall is higher than it’s recall for recipes without the tag “North American”
 
-<iframe src="recipe-project-main/assets/final_plot.html" width=800 height=600 frameBorder=0></iframe>
+To do this, we created a bar plot to verify what our false negative rates are:
+
+<iframe src="recipe-project-main/assets/final_plot.html" width=600 height=600 frameBorder=0></iframe>
+
+What this graph tells us is that non north American recipes have a higher false negative rate. However, is this difference statistically significant? We performed a permutation test to verify with difference of means being our test statistic and a significance level of 0.05.
+
+### Permutation Test Conclusion
+
+After performing our permutation test, we concluded with a p-value of 0.07, which was greater than our significance level of 0.05. Thus, we fail to reject our null hypothesis. This means that we cannot say our model is not fair to recipes that don't have the tags North American on them. We also cannot claim that the recall is not roughly the same for recipes with and without the tag "north american", and differences could be due to random chance.
