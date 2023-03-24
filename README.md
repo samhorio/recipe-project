@@ -25,7 +25,27 @@ Upon running our code, the performance of our model is overfitting to the traini
 
 
 ### Final Model
-From our baseline model, it looks like we need to regularize the tree depth since that leads to overfitting to the training data. After, we'll need to incorporate more features. Such as the values in the nutrition value column in order to improve the model there.
+For the final model we chose to add features from the tags column of the data. Since the tags on a website are often ways a user is directed to that particular recipe or product, we can hypothesize about the data generating process that the tags for each recipe garner a lot of user interaction and might therefore have high predictive power for classifying whether a recipe is rated 5-stars or not.
+
+We first started by unpacking the “tags” column. So we first found a series of all the tags in the dataset containing the recipes from food.com (where each recipe has one row to itself).  We then used the value_counts() function to find the top 25 most common tags out of the 553 tags that are in the “tags” column stored in embedded list form.
+Out of the all the tags in the recipes dataset, since there are 81,173 unique recipes on the website in total, we observe by looking at the top 3 tags that almost all recipes have the tags "preparation", "time-to-make" and "course". Thus we completely eliminate the possibility of using these tags as features. Moreover, we see that popular tags include "60 minutes or less", "4 hours or less", "30 minutes or less", and other time based tokens. Similarly, we also see "3-steps or less" as a tag. Since we already plan to incorporate minutes and number of steps into our model, we choose to eliminate those tags as additional features since our model is already using that information. The tags we choose to incorporate are:
+
+1. Main ingredient,
+2. dietary
+3. easy,
+4. occasion,
+5. cuisine
+6. main-dish
+
+The final choice we made was definitely a more intuitive exercise in trying to find features that were different from each other (to prevent multicollinearity) and to capture as much information from the data as possible.
+
+Moreover, we notice that "low in something", "low carb", "low sodium", "low-cholestrol" are popular tags in the top 25 tags too so in our model we feature engineered the nutrition values in order to incorporate these insights in our model better. While sodium and carbohydtrates are given nutritional values, we can capture "cholestrol" using saturated fats and calories.
+
+We believe these features improved our model from the perspective of the data generating process because (1) website tags are highly interactive objects on a website and receive much user interaction. Especially in the case of recipes people usually interact with these tags to find similar recipes to the one they’re viewing at the point in time. Thus, including tags as features helps us incorporate a crucial part of the data generating process in our model. Moreover, including (2) more nutritional value data gives a more holistic understanding of the recipe itself and what the user might be judging it and rating it by, especially since the tags revealed “healthy”, “low sugar” etc. as being a classification that users make for recipes, indicating that that is something that users prioritize and would keep in mind when rating a recipe.
+We first began by adding the features into the model but since Decision Tree classifiers tend to overfit and are not very good at handling with complex features, our model didn’t give us the improvement we were hoping for. Therefore we ran a grid search over three hyperparameters – max_depth, min_samples_split and criterion, most of which were aimed at trying to increase regularization so that the model generalizes better to test data. However, our grid search based classifier with even the best parameters did not perform better than our baseline model. We realized that because of the number of features that we were using, we should use a model that is more complex in its workings. We decided to use a Random Forest Classifier since instead of searching for the best feature when splitting at a node, the algorithm searches for the best feature among a random subset of features. Therefore, the model would result in greater tree diversity overall. Finally, RandomForestClassifier is by nature an ensemble method that incorporates bootstrapping so with the increased number of features, that additional hyperparameter would help in training the model well.
+
+While on the surface our final model (accuracy score = 90.4%, f1 = 88.9%) did only a little better than our baseline model (accuracy score = 89.05%, f1 = 86.9%) we believe it captures information about the data generating process more holistically and as showed by the improved f1 score, will make lesser misclassification errors when introduced to new data.
+
 
 
 ### Fairness Analysis
