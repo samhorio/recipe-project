@@ -8,3 +8,29 @@ Ratings in the dataset given to us are an ordinal categorical variable, where th
 On defining this problem, we want to make sure we only include variables that are reflective of the data generating process. As such, we cannot use the column on reviews in predicting the rating because in the data generating process the reviews are left after the rating (if they are left at all) and so we cannot train our model or build a model based on a feature that is not available at prediction time.
 
 Thus, the metric that we will use to evaluate my model is going to be the F1 score since we want to make sure we balance out both precision and recall in our model, ensuring that the website owner minimizes both false negatives (i.e. a situation where the owner rejects a good recipe that would have received a high rating) and false positives (i.e. a situation where the owner accepts a bad recipe thinking it will give a good rating). Both scenarios would be detrimental for the owner and the success of the website so it's important we use the harmonic mean of precision and recall, and therefore the F1 score is the best way forward for the evaluation metric. Moreover, we chose the F1 score over accuracy since our data has a case of severe class imbalance where there are more high rated recipes than low rated recipes as is reflected by the .valuecounts() operation on our average ratings column. That is, doing the operation (final_merged['average rating'] > 3).value_counts() gives us a series where there are 226197 "True" values (i.e. high rated recipes) and 8232 "False" values (i.e. low rated recipes).
+
+### Baseline Model
+## Code
+```python
+# Imports
+import pandas as pd
+import numpy as np
+import os
+
+import plotly.express as px
+import plotly.graph_objects as go
+pd.options.plotting.backend = 'plotly'
+TEMPLATE = 'seaborn'
+
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import Binarizer
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import f1_score, confusion_matrix
+from sklearn.tree import plot_tree
+from sklearn.preprocessing import QuantileTransformer
+from sklearn.preprocessing import FunctionTransformer
+```
