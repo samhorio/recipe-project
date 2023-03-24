@@ -37,7 +37,7 @@ We noticed earlier in our data analysis that there was a tag in our dataset in t
 
 To do this, we created a bar plot to verify what our false negative rates are:
 
-<iframe src="recipe-project-main/assets/final_plot.html" width=800 height=600 frameBorder=0></iframe>
+
 
 What this graph tells us is that non north American recipes have a higher false negative rate. However, is this difference statistically significant? We performed a permutation test to verify with difference of means being our test statistic and a significance level of 0.05.
 
