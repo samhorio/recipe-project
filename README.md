@@ -36,7 +36,7 @@ We noticed earlier in our data analysis that there was a tag in our dataset in t
 **Alternative Hypothesis**: Our model is unfair. Its recall is higher than it’s recall for recipes without the tag “North American”
 
 To do this, we created a bar plot to verify what our false negative rates are:
-<iframe src="recipe-project-main/assets/final_plot_final.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="recipe-project-main/assets/final_plot_please.html" width=800 height=600 frameBorder=0></iframe>
 
 What this graph tells us is that non north American recipes have a higher false negative rate. However, is this difference statistically significant? We performed a permutation test to verify.
 
