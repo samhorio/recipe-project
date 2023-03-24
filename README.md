@@ -50,6 +50,15 @@ final_merged['rated 5'] = final_merged['average rating'] == 5
 X_train, X_test, y_train, y_test = train_test_split(final_merged.iloc[:,:-1], final_merged['rated 5'], test_size = 0.2 )
 ```
 ### Baseline Model
+We added the **calories**, **minutes**, and **n_steps** <u>quantitative</u> features to our prediction model. We decided to add **calories** feature so that we can include the calories as a part of our prediction model. This is because when comparing different recipes, much of the time the ingredients for the same recipe have little variation. For many, checking how *much* those little variations differ can often easily be identified by evaluating the calories. Thus, this is a crucial part to include in our prediction model, as it can help us get a better gauge of the general healthiness of a food item (or for any other reason for counting calories, no judgement!). We did this by taking the data out of the list and extracting the first element of said list, as it's sorted from most to least calories. It is then used on all values in the 'nutrition' column with FunctionTransformer(), ready for preprocessing.
+
+**Minutes** feature was added because it's another likely variable that people will look at when evaluating which recipe to choose. Over time, people have become gravitating naturally towards more activities that require less time. The quicker one can complete the recipe the better. We utilized minutes by standardizing it with StandardScaler() in order to reduce any influence of potential outliers, as minutes is more subjective to whoever is using the recipe.
+
+Lastly, the **N_steps** feature was added for a similar reason. The more steps a recipe has (regardless of how the steps are established), the more unlikely someone is to choose it. The converse is also true, where the shorter amount of steps can yield to someone being more likely to favor a recipe over another. We used a FunctionTransformer() on this column as well.Thus, we utilize these three quantitative features for our prediction model.
+
+Side note: it's interesting that the *reason* why we care so much about how much/little of the activity is in order to choose it is rather interesting. It makes you wonder what this says about society (or at least the demographic of people who use recipes).
+
+The model we chose is the Decision Tree Classifier with a max depth of 40.
 ```
 # Feature 1 - Nutrition Values
 def extract_calories(df):
@@ -69,10 +78,10 @@ pl = Pipeline([
 pl.fit(X_train, y_train)
 ```
 ```
-pl.score(X_train, y_train) # High accuracy for training data
+pl.score(X_train, y_train) # 0.9951684765887622 --> High accuracy for training data
 ```
 ```
-pl.score(X_test, y_test) # Also pretty high accuracy for testing data.
+pl.score(X_test, y_test) # 0.8905854736890084 --> Also pretty high accuracy for testing data.
 ```
 ```
 pl['dt'].tree_.max_depth
@@ -80,16 +89,7 @@ pl['dt'].tree_.max_depth
 ```
 f1_score(y_test, pl.predict(X_test))
 ```
-From our insides of our baseline model, it looks like we need to regularize the tree depth since that leads to overfitting to the training data. After, we'll need to incorporate more features. Such as the values in the nutrition value column in order to improve the model there.
-### Final Model
-We added the **calories**, **minutes**, and **n_steps** <u>quantitative</u> features to our prediction model. We decided to add **calories** feature so that we can include the calories as a part of our prediction model. This is because when comparing different recipes, much of the time the ingredients for the same recipe have little variation. For many, checking how *much* those little variations differ can often easily be identified by evaluating the calories. Thus, this is a crucial part to include in our prediction model, as it can help us get a better gauge of the general healthiness of a food item (or for any other reason for counting calories, no judgement!). We did this by taking the data out of the list and extracting the first element of said list, as it's sorted from most to least calories. It is then used on all values in the 'nutrition' column with FunctionTransformer(), ready for preprocessing.
-
-**Minutes** feature was added because it's another likely variable that people will look at when evaluating which recipe to choose. Over time, people have become gravitating naturally towards more activities that require less time. The quicker one can complete the recipe the better. We utilized minutes by standardizing it with StandardScaler() in order to reduce any influence of potential outliers, as minutes is more subjective to whoever is using the recipe.
-
-Lastly, the **N_steps** feature was added for a similar reason. The more steps a recipe has (regardless of how the steps are established), the more unlikely someone is to choose it. The converse is also true, where the shorter amount of steps can yield to someone being more likely to favor a recipe over another. We used a FunctionTransformer() on this column as well.Thus, we utilize these three quantitative features for our prediction model. 
-
-The model we chose is the Decision Tree Classifier with a max depth of 40.
-
 The performance of our model is overfitting to the training data, with a 99.5% accuracy. Although this is highly accurate, our testing data received an 89% accuracy. This is still relatively high, but could be improved.
 
-Side note: it's interesting that the *reason* why we care so much about how much/little of the activity is in order to choose it is rather interesting. It makes you wonder what this says about society (or at least the demographic of people who use recipes).
+From our insides of our baseline model, it looks like we need to regularize the tree depth since that leads to overfitting to the training data. After, we'll need to incorporate more features. Such as the values in the nutrition value column in order to improve the model there.
+### Final Model
