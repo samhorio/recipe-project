@@ -81,7 +81,7 @@ pl.fit(X_train, y_train)
 pl.score(X_train, y_train) # 0.9951684765887622 --> High accuracy for training data
 ```
 
-pl.score(X_train, y_train)
+`pl.score(X_train, y_train)`
 
 
 
