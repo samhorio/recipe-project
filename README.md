@@ -35,4 +35,4 @@ We noticed earlier in our data analysis that there was a tag in our dataset in t
 
 **Alternative Hypothesis**: Our model is unfair. Its recall for recipes labeled "north american" is higher than its precision for male complainants
 
-<iframe src="assets/final_plot.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="recipe-project-main/assets/final_plot.html" width=800 height=600 frameBorder=0></iframe>
