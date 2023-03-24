@@ -80,7 +80,8 @@ pl.fit(X_train, y_train)
 ```
 pl.score(X_train, y_train) # 0.9951684765887622 --> High accuracy for training data
 ```
-`pl.score(X_train, y_train)`
+
+pl.score(X_train, y_train)
 
 
 
@@ -88,7 +89,13 @@ pl.score(X_train, y_train) # 0.9951684765887622 --> High accuracy for training d
 pl.score(X_test, y_test) # 0.8905854736890084 --> Also pretty high accuracy for testing data.
 ```
 
-`pl.score(X_test, y_test)`
+
+function test(){
+    console.log(pl.score(X_test, y_test))
+}
+
+
+
 
 ```
 pl['dt'].tree_.max_depth
