@@ -23,9 +23,9 @@ The model we chose is the Decision Tree Classifier with a max depth of 40.
 
 Upon running our code, the performance of our model is overfitting to the training data with a 99.5% accuracy. Although this is highly accurate, our testing data received an 89% accuracy. This is still relatively high, but could be improved.
 
-From our insides of our baseline model, it looks like we need to regularize the tree depth since that leads to overfitting to the training data. After, we'll need to incorporate more features. Such as the values in the nutrition value column in order to improve the model there.
+
 ### Final Model
-For our final model, we
+From our baseline model, it looks like we need to regularize the tree depth since that leads to overfitting to the training data. After, we'll need to incorporate more features. Such as the values in the nutrition value column in order to improve the model there.
 
 
 ### Fairness Analysis
@@ -36,10 +36,11 @@ We noticed earlier in our data analysis that there was a tag in our dataset in t
 **Alternative Hypothesis**: Our model is unfair. Its recall is higher than it’s recall for recipes without the tag “North American”
 
 To do this, we created a bar plot to verify what our false negative rates are:
-<iframe src="recipe-project-main/assets/final_plot.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="recipe-project-main/assets/final_plot_final.html" width=800 height=600 frameBorder=0></iframe>
 
-What this graph tells us is that non north American recipes have a higher false negative rate. However, is this difference statistically significant? We performed a permutation test to verify with difference of means being our test statistic and a significance level of 0.05.
+What this graph tells us is that non north American recipes have a higher false negative rate. However, is this difference statistically significant? We performed a permutation test to verify.
 
 ### Permutation Test Conclusion
+We performed a permutation test to verify with difference of means being our test statistic and a significance level of 0.05. We used recall for our evaluation metric with our group X being the North American recipes and our group Y being the non-North American recipes. Difference of means was our test statistic of choice with a significance level of 0.05.
 
 After performing our permutation test, we concluded with a p-value of 0.07, which was greater than our significance level of 0.05. Thus, we fail to reject our null hypothesis. This means that we cannot say our model is not fair to recipes that don't have the tags North American on them. We also cannot claim that the recall is not roughly the same for recipes with and without the tag "north american", and differences could be due to random chance.
